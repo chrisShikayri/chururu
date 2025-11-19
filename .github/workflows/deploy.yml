@@ -86,7 +86,7 @@ jobs:
         docker stack rm chris || true
 
         echo "==> Descargando la imagen del github"  
-        docker pull ghcr.io/chrisshikayri/chururu:latest
+         # docker pull ghcr.io/chrisshikayri/chururu:latest
 
         echo "==> Desplegando stack..."
             docker stack deploy -c stack.yml --with-registry-auth chris
