@@ -1,9 +1,10 @@
-name: Build & Push Docker Image
+name: CI - Test & Docker Build
 
 on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   build:
@@ -13,8 +14,22 @@ jobs:
     - name: 🧾 Checkout repository
       uses: actions/checkout@v3
 
-    # No necesitamos Python ni dependencias para el empaquetado,
-    # Docker se encargará de todo.
+    - name: 🐍 Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: 📦 Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest flake8
+
+    - name: 🧪 Run tests
+      run: pytest
+
+    - name: 🧹 Run lint
+      run: flake8 .
 
     - name: 🔐 Login to GitHub Container Registry
       uses: docker/login-action@v3
@@ -28,4 +43,4 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}:latest
+        tags: ghcr.io/chrisshikayri/chururu:latest
