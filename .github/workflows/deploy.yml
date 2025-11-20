@@ -81,13 +81,19 @@ jobs:
           password: ${{secrets.VPS_PASSWORD}}
           port: ${{secrets.VPS_SSH_PORT}}
           script: |
-            #echo "servicios desplegados"
+            echo "servicios desplegados"
+            cd ~/despliegue
 
-            #docker stack rm chris || true
-
+            #Paso 1 de
             #echo "==> Descargando la imagen del github"
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u chrisshikayri --password-stdin
             docker pull ghcr.io/chrisshikayri/chururu:latest
+            
+            #Paso 2 de
+            docker stack rm chris || true
 
-            #echo "==> Desplegando stack..."
-            #docker stack deploy -c stack.yml --with-registry-auth chris
+            sleep 30
+
+            #Paso 3 de
+            echo "==> Desplegando stack..."
+            docker stack deploy -c stack.yml --with-registry-auth chris
