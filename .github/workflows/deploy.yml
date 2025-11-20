@@ -95,5 +95,5 @@ jobs:
             sleep 30
 
             #Paso 3 de
-            echo "==> Desplegando stack..."
+            echo "==> Desplegando stack.."
             docker stack deploy -c stack.yml --with-registry-auth chris
