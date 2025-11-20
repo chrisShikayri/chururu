@@ -87,7 +87,7 @@ jobs:
 
             #echo "==> Descargando la imagen del github"
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u chrisshikayri --password-stdin
-            docker pull ghcr.io/chrisshikayayri/chururu:latest
+            docker pull ghcr.io/chrisshikayri/chururu:latest
 
             #echo "==> Desplegando stack..."
             #docker stack deploy -c stack.yml --with-registry-auth chris
